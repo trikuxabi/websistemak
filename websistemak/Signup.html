@@ -4,8 +4,6 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="shortcut icon" href="https://31.media.tumblr.com/avatar_ee818b5d7be1_128.png">
 <script type="text/javascript">
-
-
 function ikusBalioak(){
 var sAux="";
 var frm=document.getElementById("erregistro");
@@ -16,37 +14,59 @@ sAux += "BALIOA: " + frm.elements[i].value+"\n";
 alert(sAux)
 }
 
-function Konprobazioa(){
-var inprimakia="";
-var iz=document.getElementById("izena");
-
-if (iz.length===0){
- inprimakia += "Izen-abizenak eremua hutsik dago. \n";
- }
- 
-var pasahitza = document.getElementById("pasahitza");
-if (pasahitza.length===0){
-	inprimakia += "Pasahitza hutsa dago \n";
-} else if (pasahitza.length<6) {
-	inprimakia += "Pasahitza laburregia da \n";
-}
-
-var email = document.getElementById("email");
-if (email.length===0) {
-	inprimakia += "Email esparrua hutsik dago. \n";
-	}
-	
-var tfn = document.getElementById("tlf");
-if (tfn.length !== 9){
-	alert(tfn.length);
-	inprimakia += "Telefono zenbaki okerra \n";
-}
-
-alert(inprimakia);
-
-}
 </script>
 
+<script type="text/javascript">
+
+function konprobazioa(){
+var inprimakia="";
+var frm=document.getElementById("erregistro");
+
+if (frm.elements[0].value === ""){ 
+	inprimakia += "Izen-abizenak eremua hutsik dago. \n";
+}
+
+var pasahitza =frm.elements[2].value.length;
+if (pasahitza==0){
+	inprimakia += "Pasahitza hutsa dago \n";
+	}
+	else if (pasahitza<6){
+		inprimakia += "Pasahitza laburregia da \n";
+	}
+	
+
+	FullAdEr = new RegExp(/^[a-z]+[0-9]{3}@ikasle.ehu.e(us|s)$/);
+	var email = frm.elements[1].value;
+	
+if (FullAdEr.test(email)){	
+}
+else{
+inprimakia += "Email okerra\n";
+}
+ 
+	FullAdEr2 = new RegExp(/^[6-9][0-9]{8}$/);
+	var telef = frm.elements[3].value;
+	
+if (FullAdEr2.test(telef)){
+	}
+	
+	else{
+	inprimakia += "Telefono zenbaki okerra \n";
+	}
+
+ 
+ if (inprimakia === ""){
+	ikusBalioak()
+ }
+	else{
+ 
+	alert(inprimakia);
+	}
+
+}
+
+
+</script>
 </head>
 
 <body>
@@ -61,47 +81,49 @@ alert(inprimakia);
 
 <div id="page">
 <h1>Izen-ematea</h1>
-<form id="erregistro" name="erregistro" method="POST" onsubmit="Konprobazioa()">
+<form id="erregistro" name="erregistro" onsubmit="konprobazioa()" action="Erregistratu.php" method="POST">
 <p><strong>Bete itzazu honako hutsuneak izena emateko.</strong></p>
 <p><strong>Izen-abizenak </strong>
-<input type="text" name="name" id="izena"/>
+<input type="text" name="name" requiered />
 </p>
 
 <p><strong>Eposta </strong>
-<input type="text" name="email" id="email" />
+<input type="text" name="email" requiered />
 </p>
 
 
 <p><strong>Pasahitza </strong>
-<input type="password" name="password" id="pasahitza" />
+<input type="password" name="password" requiered />
 </p>
 
 <p><strong>Telefono zenbakia </strong>
-<input type="text" name="phone" id="tlf"/>
+<input type="text" name="phone" requiered/>
 </p>
 
 <p><strong>Espezialitatea </strong><br />
 <input type="radio" name="espezialitatea" value="Software ingeniaritza" checked="checked" /> Software ingeniaritza
 <input type="radio" name="espezialitatea" value="Konputazioa" /> Konputazioa
 <input type="radio" name="espezialitatea" value="Konputagailuen ingeniaritza" /> Konputagailuen ingeniaritza
-<input type="radio" name="espezialitatea" value="Robotika" /> Robotika
+<input type="radio" name="espezialitatea" value="Bestelakoak" /> Bestelakoak
 </p>
 
 <p><strong>Interesak</strong> <br />
+<textarea name="interests" cols="20" rows="5">
+
+</textarea>
+
+
+
+<!--
 <input type="checkbox" name="interes" value="HTML eta CSS" /> HTML eta CSS <br />
 <input type="checkbox" name="interes" value="JavaScript" /> JavaScript <br />
 <input type="checkbox" name="interes" value="Flash" /> Flash<br />
 <input type="checkbox" name="interes" value="C++" /> C++<br />
 <input type="checkbox" name="interes" value="Ada" /> Ada<br />
 <input type="checkbox" name="interes" value="Java" /> Java<br />
+-->
 
 </p>
-
-<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"> <br />
-<div class="imageOutput"></div>
-
-<br />
-<br />
 
 <input type="submit" name="submit" value="Bidali" />
 
